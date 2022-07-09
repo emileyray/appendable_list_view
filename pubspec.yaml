@@ -1,7 +1,7 @@
 name: appendable_list_view
 description: A new Flutter package project.
 version: 0.0.1
-homepage:
+homepage: https://github.com/emileyray/appendable_list_view
 
 environment:
   sdk: ">=2.17.3 <3.0.0"
