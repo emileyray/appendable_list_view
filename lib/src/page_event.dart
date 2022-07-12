@@ -1,11 +1,11 @@
-part of 'page_bloc.dart';
+part of 'appendable_list_view.dart';
 
-class PageEvent {}
+class _PageEvent {}
 
-class AppendPage extends PageEvent {
+class _AppendPage extends _PageEvent {
   final int pageNumber;
 
-  AppendPage(this.pageNumber);
+  _AppendPage(this.pageNumber);
 }
 
-class GetPageInitial extends PageEvent {}
+class _GetPageInitial extends _PageEvent {}

@@ -1,17 +1,17 @@
-part of 'page_bloc.dart';
+part of 'appendable_list_view.dart';
 
-class PageState<PageModel, ItemModel> {
+class _PageState<PageModel, ItemModel> {
   final List<ItemModel>? allModels;
-  PageState({this.allModels});
+  _PageState({this.allModels});
 }
 
-class PageLoading<PageModel, ItemModel>
-    extends PageState<PageModel, ItemModel> {
+class _PageLoading<PageModel, ItemModel>
+    extends _PageState<PageModel, ItemModel> {
   final bool initialLoading;
   final PageModel? lastLoadedPage;
   final int? lastPageNumber;
 
-  PageLoading({
+  _PageLoading({
     this.lastLoadedPage,
     this.lastPageNumber,
     final List<ItemModel>? allModels,
@@ -19,20 +19,22 @@ class PageLoading<PageModel, ItemModel>
   }) : super(allModels: allModels);
 }
 
-class PageReady<PageModel, ItemModel> extends PageState<PageModel, ItemModel> {
+class _PageReady<PageModel, ItemModel>
+    extends _PageState<PageModel, ItemModel> {
   final PageModel lastLoadedPagel;
   final int lastPageNumber;
 
-  PageReady(this.lastLoadedPagel, this.lastPageNumber,
+  _PageReady(this.lastLoadedPagel, this.lastPageNumber,
       final List<ItemModel> allModels)
       : super(allModels: allModels);
 }
 
-class PageEnded<PageModel, ItemModel> extends PageState<PageModel, ItemModel> {
+class _PageEnded<PageModel, ItemModel>
+    extends _PageState<PageModel, ItemModel> {
   final PageModel lastLoadedPagel;
   final int lastPageNumber;
 
-  PageEnded(this.lastLoadedPagel, this.lastPageNumber,
+  _PageEnded(this.lastLoadedPagel, this.lastPageNumber,
       final List<ItemModel> allModels)
       : super(allModels: allModels);
 }

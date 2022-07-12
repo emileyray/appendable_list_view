@@ -1,6 +1,10 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:appendable_list_view/src/page_bloc.dart';
+
+part 'page_bloc.dart';
+part 'page_event.dart';
+part 'page_state.dart';
 
 class AppendableListView<PageModel, ItemModel> extends StatefulWidget {
   final Widget Function(BuildContext, List, int) itemBuilder;
@@ -54,7 +58,7 @@ class _AppendableListViewState<PageModel, ItemModel>
         return _bloc;
       },
       child: BlocBuilder<PageBloc<PageModel, ItemModel>,
-          PageState<PageModel, ItemModel>>(
+          _PageState<PageModel, ItemModel>>(
         builder: (context, state) {
           if (modelsFetched(state)) {
             final List<ItemModel> models = state.allModels!;
@@ -65,12 +69,12 @@ class _AppendableListViewState<PageModel, ItemModel>
               child: RefreshIndicator(
                 color: widget.refreshIndicatorColor,
                 onRefresh: () async {
-                  _bloc.add(GetPageInitial());
+                  _bloc.add(_GetPageInitial());
                 },
                 child: ListView.builder(
                   itemBuilder: (context, index) {
                     if (index == models.length) {
-                      return state is PageLoading
+                      return state is _PageLoading
                           ? Container(
                               alignment: Alignment.center,
                               padding: const EdgeInsets.only(bottom: 10),
@@ -102,16 +106,16 @@ class _AppendableListViewState<PageModel, ItemModel>
         _scrollToDown = false;
       }
     }
-    if (_bloc.state is PageReady) {
+    if (_bloc.state is _PageReady) {
       if (maxScroll - currentScroll <= widget.scrollOffset) {
-        _bloc.add(AppendPage((_bloc.state as PageReady).lastPageNumber + 1));
+        _bloc.add(_AppendPage((_bloc.state as _PageReady).lastPageNumber + 1));
       }
     }
   }
 
-  bool modelsFetched(PageState state) {
-    return state is PageReady<PageModel, ItemModel> ||
-        state is PageEnded<PageModel, ItemModel> ||
-        (state is PageLoading<PageModel, ItemModel> && !state.initialLoading);
+  bool modelsFetched(_PageState state) {
+    return state is _PageReady<PageModel, ItemModel> ||
+        state is _PageEnded<PageModel, ItemModel> ||
+        (state is _PageLoading<PageModel, ItemModel> && !state.initialLoading);
   }
 }
